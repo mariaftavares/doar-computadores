@@ -30,6 +30,13 @@ const donation = (req,res) =>{
                 errorMessage: "O email informado não é válido"
             }
         }
+        if(deviceCount <= 0){
+            throw {
+                statusCode: 400,
+                error:true,
+                errorMessage: "O valor do deviceCount deve ser maior do que zero"
+            }
+        }
 
         if(deviceCount !== devices.length){
             throw {
@@ -39,7 +46,7 @@ const donation = (req,res) =>{
             }  
         }
 
-        if(validateType(devices)){
+        if(validateDevices(devices)){
             throw {
                 statusCode: 400,
                 error:true,
@@ -71,7 +78,7 @@ const validateEmail = (email) => {
     return regex.test(email);
 }
 
-const validateType = (devices) => {
+const validateDevices = (devices) => {
     const types = {
         notebook: true,
         desktop: true,
@@ -80,7 +87,12 @@ const validateType = (devices) => {
         printer: true,
         scanner:true
     }
-    const validation = devices.some(device => !types[device.type.toLowerCase()])
+    const conditions ={
+        working:true,
+        notWorking:true,
+        broken:true
+    }
+    const validation = devices.some(device => !device.type || !types[device.type.toLowerCase()] || !device.condition || !conditions[device.condition.toLowerCase()])
     return validation;
 }
 

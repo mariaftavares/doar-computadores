@@ -137,7 +137,7 @@ describe("API test", () => {
                 expect(res.body).toEqual(expect.objectContaining({
                     statusCode: 400,
                     error: true,
-                    errorMessage: "A quantidade de equipamentos (2) não está de acordo com as informações de equipamentos enviados (1)"
+                    errorMessage: `A quantidade de equipamentos (2) não está de acordo com as informações de equipamentos enviados (1)`
                 }))
             })
             .end((err, res) => {
