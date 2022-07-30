@@ -48,7 +48,7 @@ describe("API test", () => {
             .send({
                 name: "Paula",
                 email: "paula1236",
-                phone: "329983252",
+                phone: "32998325220",
                 zip: "36012-350",
                 city: "juiz de fora",
                 state: "minas gerais",
@@ -68,7 +68,7 @@ describe("API test", () => {
                 expect(res.body).toEqual(expect.objectContaining({
                     statusCode: 400,
                     error: true,
-                    errorMessage: "O email informado não é válido"
+                    errorMessage: "O email informado não é válido."
                 }))
             })
             .end((err, res) => {
@@ -84,7 +84,7 @@ describe("API test", () => {
             .send({
                 name: "Paula",
                 email: "paula1236@gmail.com",
-                phone: "329983252",
+                phone: "32998325220",
                 zip: "36012-350",
                 city: "juiz de fora",
                 state: "minas gerais",
@@ -117,7 +117,7 @@ describe("API test", () => {
             .send({
                 name: "Paula",
                 email: "paula1236@gmail.com",
-                phone: "329983252",
+                phone: "32998325220",
                 zip: "36012-350",
                 city: "juiz de fora",
                 state: "minas gerais",
@@ -153,7 +153,7 @@ describe("API test", () => {
             .send({
                 name: "Paula",
                 email: "paula1236@gmail.com",
-                phone: "329983252",
+                phone: "32998325220",
                 zip: "36012-350",
                 city: "juiz de fora",
                 state: "minas gerais",
@@ -173,7 +173,7 @@ describe("API test", () => {
                 expect(res.body).toEqual(expect.objectContaining({
                     statusCode: 400,
                     error: true,
-                    errorMessage: "O tipo e a condição do equipamento não é válido."
+                    errorMessage: "O tipo ou condição do equipamento não é válido."
                 }))
             })
             .end((err, res) => {
@@ -189,7 +189,7 @@ describe("API test", () => {
             .send({
                 name: "Paula",
                 email: "paula1236@gmail.com",
-                phone: "329983252",
+                phone: "32998325220",
                 zip: "36012-350",
                 city: "juiz de fora",
                 state: "minas gerais",
@@ -222,7 +222,7 @@ describe("API test", () => {
             .expect("Content-Type", /json/)
             .send({
                 name: "Paula",
-                phone: "329983252",
+                phone: "32998325220",
                 zip: "36012-350",
                 city: "juiz de fora",
                 state: "minas gerais",
