@@ -27,14 +27,14 @@ const donation = (req,res) =>{
             throw {
                 statusCode: 400,
                 error:true,
-                errorMessage: "O email informado não é válido"
+                errorMessage: "O email informado não é válido."
             }
         }
         if(deviceCount <= 0){
             throw {
                 statusCode: 400,
                 error:true,
-                errorMessage: "O valor do deviceCount deve ser maior do que zero"
+                errorMessage: "O valor do deviceCount deve ser maior do que zero."
             }
         }
 
@@ -50,7 +50,7 @@ const donation = (req,res) =>{
             throw {
                 statusCode: 400,
                 error:true,
-                errorMessage: "O tipo e a condição do equipamento não é válido."
+                errorMessage: "O tipo ou condição do equipamento não é válido."
             }  
 
         }
