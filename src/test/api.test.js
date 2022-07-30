@@ -21,10 +21,26 @@ describe("API test", () => {
             });
     })
 
-    test("POST /donation não enviando nenhum campo", (done) => {
+    test("POST /donation enviado com campos faltando (city)", (done) => {
         request(app)
             .post("/donation")
             .expect("Content-Type", /json/)
+            .send({
+                name: "Paula",
+                email: "paula1236@gmail.com",
+                phone: "32998325220",
+                zip: "36012-350",
+                state: "minas gerais",
+                streetAddress: "Rua 123",
+                number: "2263",
+                neighborhood: "São Mateus",
+                complement:"apt 402",
+                deviceCount: 1,
+                devices: [{
+                    type: "printer",
+                    condition: "working"
+                }]
+            })
             .expect(400)
             .expect((res) => {
                 expect(res.body.length).not.toBe(0)
