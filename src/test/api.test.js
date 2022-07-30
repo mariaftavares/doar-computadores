@@ -173,7 +173,7 @@ describe("API test", () => {
                 expect(res.body).toEqual(expect.objectContaining({
                     statusCode: 400,
                     error: true,
-                    errorMessage: "O tipo de equipamento não é válido"
+                    errorMessage: "O tipo e a condição do equipamento não é válido."
                 }))
             })
             .end((err, res) => {
