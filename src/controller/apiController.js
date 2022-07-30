@@ -30,6 +30,15 @@ const donation = (req,res) =>{
                 errorMessage: "O email informado não é válido."
             }
         }
+
+        if(!validatePhone(phone)){
+            throw {
+                statusCode: 400,
+                error:true,
+                errorMessage: "O telefone informado não é valido."
+            }
+        }
+
         if(deviceCount <= 0){
             throw {
                 statusCode: 400,
@@ -94,6 +103,12 @@ const validateDevices = (devices) => {
     }
     const validation = devices.some(device => !device.type || !types[device.type.toLowerCase()] || !device.condition || !conditions[device.condition.toLowerCase()])
     return validation;
+}
+
+
+const validatePhone = (phone) => {
+    const regex = new RegExp('^((1[1-9])|([2-9][0-9]))((3[0-9]{3}[0-9]{4})|(9[0-9]{3}[0-9]{5}))$'); 
+    return regex.test(phone);
 }
 
 
