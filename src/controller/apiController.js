@@ -32,6 +32,7 @@ const donation = (req,res) =>{
         }
 
         if(!validatePhone(phone)){
+            console.log(validatePhone(phone))
             throw {
                 statusCode: 400,
                 error:true,
@@ -98,7 +99,7 @@ const validateDevices = (devices) => {
     }
     const conditions ={
         working:true,
-        notWorking:true,
+        notworking:true,
         broken:true
     }
     const validation = devices.some(device => !device.type || !types[device.type.toLowerCase()] || !device.condition || !conditions[device.condition.toLowerCase()])
