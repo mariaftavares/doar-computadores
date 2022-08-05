@@ -1,0 +1,43 @@
+const validateField = (fields)=>{
+    const validation = fields.some(field => !field || field.trim() == "")
+    return validation;
+}
+
+const validateEmail = (email) => {
+    const regex = new RegExp(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/); 
+    return regex.test(email);
+}
+
+const validateDevices = (devices) => {
+    const types = {
+        notebook: true,
+        desktop: true,
+        netbook: true,
+        screen: true,
+        printer: true,
+        scanner:true
+    }
+    
+    const conditions ={
+        working:true,
+        notworking:true,
+        broken:true
+    }
+    const validation = devices.some(device => !device.type || !types[device.type.toLowerCase()] || !device.condition || !conditions[device.condition.toLowerCase()])
+    return validation;
+}
+
+
+const validatePhone = (phone) => {
+    const regex = new RegExp('^((1[1-9])|([2-9][0-9]))((3[0-9]{3}[0-9]{4})|(9[0-9]{3}[0-9]{5}))$'); 
+    return regex.test(phone);
+}
+
+
+
+module.exports={
+    validateField,
+    validateEmail,
+    validateDevices,
+    validatePhone
+}
