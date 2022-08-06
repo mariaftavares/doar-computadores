@@ -21,9 +21,10 @@ const getDonations = async (req, res) => {
         const allDonations = await database.select(['donations.*', 'devices.type', 'devices.condition'])
             .table('donations')
             .innerJoin('devices', 'devices.donations_iddonation', 'donations.iddonation')
-            .orderBy('donations.createDate', 'desc')
+            .orderBy('donations.iddonation', 'desc')
         const response = [];
         allDonations.forEach(donation => {
+            // Filtar todos resultados que possuem o mesmo iddonation 
             let filtered = allDonations.filter(element => element.iddonation === donation.iddonation);
 
             if (filtered && filtered.length > 0 && !response.some(e => e.id === filtered[0].iddonation)) {
@@ -40,10 +41,9 @@ const getDonations = async (req, res) => {
                     "complement": donation.complement,
                     "neighborhood": donation.neighborhood,
                     "deviceCount": donation.deviceCount,
-                    "createDate": donation.createDate,
                     "devices": []
                 }
-
+                
                 filtered.forEach(donationFiltered => {
                     donationData.devices.push({
                         "type": donationFiltered.type,
@@ -68,14 +68,23 @@ const getDonations = async (req, res) => {
 
 const donation = async (req, res) => {
     const {name,email,phone,zip,city,state,streetAddress,number,complement,neighborhood,deviceCount,devices} = req.body
-    const fields = [name, phone, zip, city, state, streetAddress, number, neighborhood]
+    const fields = [name, phone, zip, city, state, streetAddress, number, neighborhood,devices,deviceCount]
+    const validationFiels = validators.validateField(fields) 
     try {
-        if (validators.validateField(fields) || !devices || !deviceCount) {
+    
+        if (validationFiels.length>0) {
             throw {
                 statusCode: 400,
                 error: true,
-                requiredFiels: ["name", "phone", "zip", "city", "state", "streetAddress", "number", "neighborhood", "deviceCount", "devices"],
-                errorMessage: "Todos os campos obrigatórios devem ser informados"
+                requiredFiels:validationFiels,
+                errorMessage:"Todos os campos obrigatórios devem ser informados"
+            }
+        }
+        if (deviceCount !== devices.length) {
+            throw {
+                statusCode: 400,
+                error: true,
+                errorMessage: `A quantidade de equipamentos (${deviceCount.toString()}) não está de acordo com as informações de equipamentos enviados (${devices.length.toString()})`
             }
         }
         if (email && !validators.validateEmail(email)) {
@@ -91,22 +100,6 @@ const donation = async (req, res) => {
                 statusCode: 400,
                 error: true,
                 errorMessage: "O telefone informado não é valido."
-            }
-        }
-
-        if (deviceCount <= 0) {
-            throw {
-                statusCode: 400,
-                error: true,
-                errorMessage: "O valor do deviceCount deve ser maior do que zero."
-            }
-        }
-
-        if (deviceCount !== devices.length) {
-            throw {
-                statusCode: 400,
-                error: true,
-                errorMessage: `A quantidade de equipamentos (${deviceCount.toString()}) não está de acordo com as informações de equipamentos enviados (${devices.length.toString()})`
             }
         }
 
