@@ -1,6 +1,3 @@
-const {
-    default: knex
-} = require('knex')
 const database = require('../database/config')
 const validators = require('../validations/validators')
 
@@ -27,6 +24,7 @@ const getDonations = async (req, res) => {
             // Filtar todos resultados que possuem o mesmo iddonation 
             let filtered = allDonations.filter(element => element.iddonation === donation.iddonation);
 
+            // valida se existe elementos filtrados e se, caso exista, se ele já foi incluido na resposta
             if (filtered && filtered.length > 0 && !response.some(e => e.id === filtered[0].iddonation)) {
                 let donationData = {
                     "id": donation.iddonation,
@@ -36,14 +34,14 @@ const getDonations = async (req, res) => {
                     "zip": donation.zip,
                     "city": donation.city,
                     "state": donation.state,
-                    "streetAddress": donation.streetAddress,
+                    "streetAddress": donation.streetaddress,
                     "number": donation.number,
                     "complement": donation.complement,
                     "neighborhood": donation.neighborhood,
                     "deviceCount": donation.deviceCount,
                     "devices": []
                 }
-                
+
                 filtered.forEach(donationFiltered => {
                     donationData.devices.push({
                         "type": donationFiltered.type,
@@ -111,7 +109,6 @@ const donation = async (req, res) => {
             }
 
         }
-
         const createDonation = await database.insert({
             name: name,
             email: email,
