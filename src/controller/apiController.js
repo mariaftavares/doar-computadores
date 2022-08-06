@@ -55,7 +55,12 @@ const getDonations = async (req, res) => {
             }
         })
 
+        if(response.length == 0){
+            return  res.status(200).json({message:"Nenhuma doação foi realizada ainda"})
+        }
+    
         res.status(200).send(response)
+    
     } catch (error) {
         res.status(500).send(error.message)
     }
