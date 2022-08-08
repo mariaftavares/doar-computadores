@@ -74,7 +74,7 @@ const donation = async (req, res) => {
             throw {
                 statusCode: 400,
                 error: true,
-                requiredFiels:validationFiels,
+                requiredFields:validationFiels,
                 errorMessage:"Todos os campos obrigatórios devem ser informados"
             }
         }
