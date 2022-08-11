@@ -17,17 +17,17 @@ const getDonations = async (req, res) => {
     try {
         const allDonations = await database.select(['donations.*', 'devices.type', 'devices.condition'])
             .table('donations')
-            .innerJoin('devices', 'devices.donations_iddonation', 'donations.iddonation')
-            .orderBy('donations.iddonation', 'desc')
+            .innerJoin('devices', 'devices.donation_id', 'donations.id')
+            .orderBy('donations.id', 'desc')
         const response = [];
         allDonations.forEach(donation => {
-            // Filtar todos resultados que possuem o mesmo iddonation 
-            let filtered = allDonations.filter(element => element.iddonation === donation.iddonation);
+            // Filtar todos resultados que possuem o mesmo id
+            let filtered = allDonations.filter(element => element.id=== donation.id);
 
             // valida se existe elementos filtrados e se, caso exista, se ele já foi incluido na resposta
-            if (filtered && filtered.length > 0 && !response.some(e => e.id === filtered[0].iddonation)) {
+            if (filtered && filtered.length > 0 && !response.some(e => e.id === filtered[0].id)) {
                 let donationData = {
-                    "id": donation.iddonation,
+                    "id": donation.id,
                     "name": donation.name,
                     "email": donation.email,
                     "phone": donation.phone,
@@ -120,15 +120,15 @@ const donation = async (req, res) => {
             number: number,
             complement: complement,
             neighborhood: neighborhood,
-            deviceCount: deviceCount}).table('donations').returning('iddonation')
+            deviceCount: deviceCount}).table('donations').returning('id')
         // Guardando ids dos devices cadastrados
         const devicesIds = [];
         for (let device of devices) {
             let createDevice = await database.insert({
                 type: device.type,
                 condition: device.condition,
-                donations_iddonation: createDonation[0]
-            }).table('devices').returning('iddevices')
+                donation_id: createDonation[0]
+            }).table('devices').returning('id')
             devicesIds.push(createDevice[0])
         }
 
