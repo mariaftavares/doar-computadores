@@ -7,8 +7,8 @@ exports.up = function(knex) {
   .createTable('donations', (table)=> {
       table.increments('iddonation').primary().unique();
       table.string('name').notNullable();
-      table.string('email').unique();
-      table.string('phone').notNullable().unique();
+      table.string('email');
+      table.string('phone').notNullable();
       table.string('zip').notNullable();
       table.string('city').notNullable();
       table.string('state').notNullable();
