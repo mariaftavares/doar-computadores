@@ -152,5 +152,5 @@ const donation = async (req, res) => {
 module.exports = {
     statusReturn,
     donation,
-    getDonations
+    getDonations,
 }
