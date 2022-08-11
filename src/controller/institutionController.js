@@ -80,26 +80,12 @@ const insitution = async (req,res) => {
 }
 const getInstitutions = async(req,res) => {
     try {
-        const allInstitutions = await database.select([
-        'name',
-        'phone',
-        'zip',
-        'city',
-        'state',
-        'streetAddress',
-        'number',
-        'complement',
-        'neighborhood',
-        'description',
-        'urlInstagram',
-        'urlLinkedin',
-        'urlFacebook',
-        'urlSite',
-        'type'])
+        const allInstitutions = await database.select(['institutions.*'])
         .table('institutions')
-        .orderBy('createdAt','desc')
+        .orderBy('created_at','desc')
         const returnInstitutions = allInstitutions.map((institution) => {
             //Retirando os vazios
+            delete institution.email;
             const emptys = ["",null, undefined]
             institution.complement = !emptys.includes(institution.complement)? 
                 institution.complement : "Sem complement"
