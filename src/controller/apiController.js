@@ -17,7 +17,7 @@ const getDonations = async (req, res) => {
     try {
         const allDonations = await database.select(['donations.*', 'devices.type', 'devices.condition'])
             .table('donations')
-            .innerJoin('devices', 'devices.donations_id', 'donations.id')
+            .innerJoin('devices', 'devices.donation_id', 'donations.id')
             .orderBy('donations.id', 'desc')
         const response = [];
         allDonations.forEach(donation => {
