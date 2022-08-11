@@ -8,7 +8,7 @@
       table.increments('id').primary().unique();
       table.string('type').notNullable();
       table.string('condition').notNullable();
-      table.integer('donations_iddonation').unique().unsigned();
+      table.integer('donations_iddonation').unsigned();
       table.foreign('donations_iddonation')
            .references('donations.iddonation')
            .onDelete('CASCADE')
