@@ -4,11 +4,13 @@ on:
   push:
     branches: [ "dev" ]
   pull_request:
+    types:
+      - closed
     branches: [ "dev" ]
 
 jobs:
   build:
-
+    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -31,6 +33,7 @@ jobs:
       run: npm run test
 
   deploy: 
+    if: ${{ github.event.pull_request.merged }}
     needs: build
     runs-on: ubuntu-latest
     steps:
