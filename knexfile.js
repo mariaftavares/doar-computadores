@@ -1,5 +1,8 @@
 const {resolve} = require('path')
-
+/*
+Descomentar para rodar as migrations
+require('dotenv-safe/config')
+*/
 module.exports = {
     client: 'mysql2',
     connection: {
