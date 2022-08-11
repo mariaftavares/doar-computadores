@@ -5,7 +5,7 @@
 exports.up = function(knex) {
   return knex.schema
   .createTable('donations', (table)=> {
-      table.increments('iddonation').primary().unique();
+      table.increments('id').primary().unique();
       table.string('name').notNullable();
       table.string('email');
       table.string('phone').notNullable();

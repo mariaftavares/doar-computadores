@@ -8,9 +8,9 @@
       table.increments('id').primary().unique();
       table.string('type').notNullable();
       table.string('condition').notNullable();
-      table.integer('donations_iddonation').unsigned();
-      table.foreign('donations_iddonation')
-           .references('donations.iddonation')
+      table.integer('donations_id').unsigned();
+      table.foreign('donations_id')
+           .references('donations.id')
            .onDelete('CASCADE')
            .onUpdate('CASCADE');
       table.timestamps(true,true);
