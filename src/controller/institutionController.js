@@ -7,6 +7,7 @@ const insitution = async (req,res) => {
          urlInstagram, urlLinkedin, urlFacebook,
          urlSite, type} = req.body;
          const validationFiels = validators.validateField([name, phone, zip, city, state, streetAddress, number, neighborhood,description])
+         if(!email) validationFiels.push('email')
          try {
             if (validationFiels.length>0) {
                 throw {
@@ -16,17 +17,19 @@ const insitution = async (req,res) => {
                     errorMessage:"Todos os campos obrigatórios devem ser informados"
                 }
             }
-            if (email && !validators.validateEmail(email)) {
+            if (!validators.validateEmail(email)) {
                 throw {
                     statusCode: 400,
                     error: true,
                     errorMessage: "O email informado não é válido."
                 }
             }
-            const emailAlreadyExists= await database.select(['institutions.*'])
+            const [emailAlreadyExists]= await database.select(['institutions.*'])
             .table('institutions')
-            .where({ email });
+            .where({ email })
+            .limit(1);
             if(emailAlreadyExists) {
+                console.log(emailAlreadyExists)
                 throw {
                     statusCode: 400,
                     error: true,
@@ -75,10 +78,38 @@ const insitution = async (req,res) => {
 }
 const getInstitutions = async(req,res) => {
     try {
-        const allInstitutions = await database.select(['institutions.*'])
+        const allInstitutions = await database.select([
+        'name',
+        'phone',
+        'zip',
+        'city',
+        'state',
+        'streetAddress',
+        'number',
+        'complement',
+        'neighborhood',
+        'description',
+        'urlInstagram',
+        'urlLinkedin',
+        'urlFacebook',
+        'urlSite',
+        'type'])
         .table('institutions')
         .orderBy('createdAt','desc')
-        return res.json(allInstitutions)
+        const returnInstitutions = allInstitutions.map((institution) => {
+            institution.complement = institution.complement !== "" ? 
+                institution.complement : "Sem complement"
+            institution.urlLinkedin =  institution.urlLinkedin !== "" ?
+                institution.urlLinkedin : "Sem Linkedin"
+            institution.urlFacebook = institution.urlFacebook !== "" ?
+                institution.urlFacebook : "Sem Facebook"
+            institution.urlInstagram = institution.urlInstagram !== "" ?
+                institution.urlInstagram : "Sem Instagram"
+            institution.urlSite = institution.urlSite !== "" ?
+                institution.urlSite : "Sem Website"
+            return institution
+        })
+        return res.json(returnInstitutions)
     } catch (error) {
         return res.status(400).json({ error:error.message})
     }
