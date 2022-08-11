@@ -127,7 +127,7 @@ const donation = async (req, res) => {
             let createDevice = await database.insert({
                 type: device.type,
                 condition: device.condition,
-                donations_id: createDonation[0]
+                donation_id: createDonation[0]
             }).table('devices').returning('id')
             devicesIds.push(createDevice[0])
         }
