@@ -4,7 +4,7 @@ on:
   pull_request:
     types:
       - closed
-    branches: [ "dev" ]
+    branches: ['dev']
 
 jobs:
   build:
@@ -17,17 +17,17 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    
-  deploy: 
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build --if-present
+
+  deploy:
     if: ${{ github.event.pull_request.merged }}
     needs: build
     runs-on: ubuntu-latest
