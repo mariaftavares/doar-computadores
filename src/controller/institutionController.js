@@ -78,6 +78,13 @@ const insitution = async (req,res) => {
             }
          }
 }
+const returnNoEmpty = (about,field) => {
+    const emptys = ["",null, undefined]
+    if(emptys.includes(field)) {
+        return `Sem ${about}`
+    }
+    return field;
+}
 const getInstitutions = async(req,res) => {
     try {
         const allInstitutions = await database.select(['institutions.*'])
@@ -86,17 +93,12 @@ const getInstitutions = async(req,res) => {
         const returnInstitutions = allInstitutions.map((institution) => {
             //Retirando os vazios
             delete institution.email;
-            const emptys = ["",null, undefined]
-            institution.complement = !emptys.includes(institution.complement)? 
-                institution.complement : "Sem complement"
-            institution.urlLinkedin =  !emptys.includes(institution.urlLinkedin)?
-                institution.urlLinkedin : "Sem Linkedin"
-            institution.urlFacebook = !emptys.includes(institution.urlFacebook) ?
-                institution.urlFacebook : "Sem Facebook"
-            institution.urlInstagram = !emptys.includes(institution.urlInstagram) ?
-                institution.urlInstagram : "Sem Instagram"
-            institution.urlSite = !emptys.includes(institution.urlSite) ?
-                institution.urlSite : "Sem Website"
+           
+            institution.complement = returnNoEmpty('Complement',institution.complement)
+            institution.urlLinkedin = returnNoEmpty('Linkedin',institution.urlLinkedin)
+            institution.urlFacebook = returnNoEmpty('Facebook', institution.urlFacebook)
+            institution.urlInstagram = returnNoEmpty('Instagram',institution.urlInstagram)
+            institution.urlSite = returnNoEmpty('Site',institution.urlSite)
             return institution
         })
         return res.json(returnInstitutions)
