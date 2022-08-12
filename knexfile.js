@@ -1,5 +1,4 @@
 const { resolve } = require('path')
-
 module.exports = {
   client: 'mysql2',
   connection: {

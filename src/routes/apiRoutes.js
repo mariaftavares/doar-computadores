@@ -1,9 +1,11 @@
-const express = require('express')
-const router = express.Router()
-const controller = require('../controller/apiController')
+const router = express.Router();
+const donationController = require("../controller/donationController")
+const institutionController = require("../controller/institutionController")
 
-router.get('/', controller.statusReturn)
-router.post('/donation', controller.donation)
-router.get('/donation', controller.getDonations)
+router.get('/',donationController.statusReturn)
+router.post('/donation',donationController.donation)
+router.get('/donation',donationController.getDonations)
+router.post('/institution',institutionController.insitution)
+router.get('/institution', institutionController.getInstitutions)
 
 module.exports = router
