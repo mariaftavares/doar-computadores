@@ -2,28 +2,18 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
- exports.up =   function(knex) {
+exports.up = function (knex) {
   return knex.schema.alterTable('donations', (table) => {
-  
-    
-    table.renameColumn('iddonation','id')
-
+    table.renameColumn('iddonation', 'id')
   })
-
-
-  
- 
-};
+}
 
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down =  function(knex) {
-
+exports.down = function (knex) {
   return knex.schema.alterTable('donations', (table) => {
-    table.renameColumn('id','iddonation')
-   
+    table.renameColumn('id', 'iddonation')
   })
-  
-};
+}
